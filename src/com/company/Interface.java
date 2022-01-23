@@ -7,6 +7,9 @@ public class Interface extends JComponent {
 //    public static void main(String[] args) {
 //        //JFrame window = getJFrame();
 //    }
+    public Interface(){
+        enableEvents(AWTEvent.MOUSE_EVENT_MASK);
+    }
     static JFrame getJFrame(){
         JFrame window = new JFrame("tic-tac-toe");
         window.setVisible(true);
@@ -18,9 +21,12 @@ public class Interface extends JComponent {
     }
 
     protected void paintComponent(Graphics graphics){
+        super.paintComponent(graphics);
+        drawField(graphics);
+    }
+    void drawField(Graphics graphics){
         int width = getWidth();
         int height = getHeight();
-        super.paintComponent(graphics);
         graphics.setColor(Color.red);
 //        graphics.drawOval(10,10,100,100);
         for (int i = 1; i < 3; i++) {
