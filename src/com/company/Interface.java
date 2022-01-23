@@ -26,6 +26,30 @@ public class Interface extends JComponent {
         }
         isXTurn = true;
     }
+    int checkState(){
+        int diag = 0;
+        int diag2 = 0;
+        for (int i = 0; i < 3; i++){
+            diag += field[i][i];
+            diag2 += field[i][i];
+        }
+        if (diag == FIELD_0 * 3 || diag == FIELD_X * 3) return diag;
+        if (diag2 == FIELD_0 * 3 || diag2 == FIELD_X * 3) return diag2;
+        int checki, checkj;
+        boolean hasEmpty = false;
+        for (int i = 0; i < 3; i++){
+            checki = 0;
+            checkj = 0;
+            for (int j = 0; j < 3; j++) {
+                if (field[i][j] == 0) hasEmpty = true;
+                checki += field[i][j];
+                checkj += field[i][j];
+            }
+            if (checki == FIELD_0 * 3 || checki == FIELD_X * 3) return checki;
+            if (checkj == FIELD_0 * 3 || checkj == FIELD_X * 3) return checkj;
+        }
+        if (hasEmpty) return 0; else return -1;
+    }
     static JFrame getJFrame(){
         JFrame window = new JFrame("tic-tac-toe");
         window.setVisible(true);
@@ -47,6 +71,19 @@ public class Interface extends JComponent {
                 field[i][j] = isXTurn?FIELD_X:FIELD_0;
                 isXTurn = !isXTurn;
                 repaint();
+                int res = checkState();
+                if (res != 0){
+                    if (res == FIELD_0 * 3){
+                        JOptionPane.showMessageDialog(this, "Победили нолики!", "победа!", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else if (res == FIELD_X * 3){
+                        JOptionPane.showMessageDialog(this, "Победили крестики!", "победа!", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "ничья", "ничья!", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    initGame();
+                    repaint();
+                }
             }
         }
     }
