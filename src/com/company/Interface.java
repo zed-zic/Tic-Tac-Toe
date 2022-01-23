@@ -51,9 +51,37 @@ public class Interface extends JComponent {
         }
     }
 
+    void drawX(int i, int j, Graphics graphics){
+        graphics.setColor(Color.BLACK);
+        int dh = getHeight() / 3;
+        int dw = getWidth() / 3;
+        int x = i * dw;
+        int y = j * dh;
+        graphics.drawLine(x, y,x+dw,y+dh);
+        graphics.drawLine(x, y+dh,x+dw, y);
+    }
+
+    void draw0(int i, int j, Graphics graphics){
+        graphics.setColor(Color.BLACK);
+        int dh = getHeight() / 3;
+        int dw = getWidth() / 3;
+        int x = i * dw;
+        int y = j * dh;
+        graphics.drawOval(x + 5 * dw /100, y, dw * 9 / 10, dh);
+    }
+
+    void drawX0(Graphics graphics){
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                if (field[i][j] == FIELD_X) drawX(i, j, graphics);
+                if (field[i][j] == FIELD_0) draw0(i, j, graphics);
+            }
+        }
+    }
     protected void paintComponent(Graphics graphics){
         super.paintComponent(graphics);
         drawField(graphics);
+        drawX0(graphics);
     }
 
     void drawField(Graphics graphics){
